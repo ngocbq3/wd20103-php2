@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit68ca98374925fab46bf8e757a845ce0e
 {
     public static $prefixLengthsPsr4 = array (
+        'e' => 
+        array (
+            'eftec\\bladeone\\' => 15,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -14,6 +18,10 @@ class ComposerStaticInit68ca98374925fab46bf8e757a845ce0e
     );
 
     public static $prefixDirsPsr4 = array (
+        'eftec\\bladeone\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/eftec/bladeone/lib',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',

@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/env.php';
+require_once __DIR__ . "/app/helper.php";
 
 // Require composer autoloader
 require __DIR__ . '/vendor/autoload.php';

@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\Product;
+
 class HomeController
 {
     public function index()
     {
-        echo "<h1>HOME PAGE</h1>";
+        $products = Product::all();
+        return view('home', compact('products'));
     }
 }
