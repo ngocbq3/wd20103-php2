@@ -1,0 +1,15 @@
+{
+  "name": "bqngoc/bai3",
+  "authors": [
+    {
+      "name": "ngocbq3",
+      "email": "ngocbq@fpt.edu.vn"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

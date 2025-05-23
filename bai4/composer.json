@@ -1,0 +1,17 @@
+{
+  "name": "bqngo/bai4",
+  "authors": [
+    {
+      "name": "ngocbq3",
+      "email": "ngocbq@fpt.edu.vn"
+    }
+  ],
+  "require": {
+    "bramus/router": "~1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
