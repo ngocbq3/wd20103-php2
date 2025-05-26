@@ -9,6 +9,7 @@ class BaseModel
     protected $conn = null; //Đối tượng kết nối CSDL
     protected $table = ""; //tên bảng dữ liệu
     protected $primaryKey = "id"; //khóa chính
+    protected $sqlBuilder; //Câu lệnh sql
 
     public function __construct()
     {
@@ -30,5 +31,19 @@ class BaseModel
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_CLASS);
         return $result;
+    }
+
+    /**
+     * @method find: lấy ra 1 bản ghi theo khóa chính
+     * @param $id: giá trị của khóa cần lấy
+     */
+    public static function find($id)
+    {
+        $model = new static;
+        $sql = "SELECT * FROM {$model->table}";
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+        return $result[0] ?? null;
     }
 }
