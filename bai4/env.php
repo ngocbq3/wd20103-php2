@@ -1,6 +1,6 @@
 <?php
 
-const APP_URL = "";
+const APP_URL = "http://localhost/WD20103-php2/bai4/";
 
 const APP_DIR = __DIR__;
 

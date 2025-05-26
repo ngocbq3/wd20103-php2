@@ -1,4 +1,7 @@
 <?php
+
+use App\Controllers\HomeController;
+
 require_once __DIR__ . '/env.php';
 require_once __DIR__ . "/app/helper.php";
 
@@ -23,5 +26,9 @@ $router->get('/posts/{id}', function ($id) {
     echo "Post Id=$id";
 });
 
+//Chi tiết sản phẩm
+$router->get('/product/{id}', HomeController::class . '@show');
+
+$router->get('/show-all', HomeController::class . '@showAll');
 // Run it!
 $router->run();
