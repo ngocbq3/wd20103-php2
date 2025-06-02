@@ -176,4 +176,26 @@ class BaseModel
         $stmt->execute($data);
         return $model->conn->lastInsertId();
     }
+
+    /**
+     * @method update: cập nhật dữ liệu
+     * @param $id: cập nhật theo khóa chính
+     * @param $data: dữ liệu
+     */
+    public static function update($id, $data)
+    {
+        $model = new static;
+        $sql = "UPDATE $model->table SET ";
+        foreach ($data as $key => $value) {
+            $sql .= "`{$key}`=:{$key}, ";
+        }
+        //Xóa dấu , ở cuối chuỗi
+        $sql = rtrim($sql, ", ");
+        $sql .= " WHERE `{$model->primaryKey}`=:{$model->primaryKey}";
+        $stmt = $model->conn->prepare($sql);
+
+        //Thêm id vào mảng data
+        $data["$model->primaryKey"] = $id;
+        $stmt->execute($data);
+    }
 }

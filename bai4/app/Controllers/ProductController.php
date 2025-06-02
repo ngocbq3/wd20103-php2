@@ -31,4 +31,18 @@ class ProductController
         $id = Product::create($data);
         dd($id);
     }
+
+    public function update()
+    {
+        $data = [
+            'name' => "Test 1 update",
+            'image' => "No image",
+            'price' => 120,
+            'stock' => 999,
+            'description' => "Mô tả 1 update",
+            'category_id'   => 3
+        ];
+
+        Product::update(108, $data);
+    }
 }

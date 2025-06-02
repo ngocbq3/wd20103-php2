@@ -34,5 +34,6 @@ $router->get('/show-all', HomeController::class . '@showAll');
 
 $router->get('/products', ProductController::class . "@index");
 $router->get('/products/store', ProductController::class . "@store");
+$router->get('/products/update', ProductController::class . "@update");
 // Run it!
 $router->run();
