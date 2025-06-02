@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\HomeController;
+use App\Controllers\ProductController;
 
 require_once __DIR__ . '/env.php';
 require_once __DIR__ . "/app/helper.php";
@@ -30,5 +31,8 @@ $router->get('/posts/{id}', function ($id) {
 $router->get('/product/{id}', HomeController::class . '@show');
 
 $router->get('/show-all', HomeController::class . '@showAll');
+
+$router->get('/products', ProductController::class . "@index");
+$router->get('/products/store', ProductController::class . "@store");
 // Run it!
 $router->run();

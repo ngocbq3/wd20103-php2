@@ -10,6 +10,7 @@ class BaseModel
     protected $table = ""; //tên bảng dữ liệu
     protected $primaryKey = "id"; //khóa chính
     protected $sqlBuilder; //Câu lệnh sql
+    protected $params = []; //Chứa các tham số cho câu lệnh SQL
 
     public function __construct()
     {
@@ -82,8 +83,97 @@ class BaseModel
     public function get()
     {
         $stmt = $this->conn->prepare($this->sqlBuilder);
-        $stmt->execute();
+        $stmt->execute($this->params);
         $result = $stmt->fetchAll(PDO::FETCH_CLASS);
         return $result;
+    }
+
+    /**
+     * @method orderBy: phương thức để sắp xếp dữ liệu
+     * @param @name: tên cột
+     * @param @sort: điều kiện sắp xếp
+     */
+    public function orderBy($name, $sort = 'ASC')
+    {
+        $this->sqlBuilder .= " ORDER BY $name $sort";
+        return $this;
+    }
+    /**
+     * @method limit: hạn chế cố lượng bạn ghi lấy ra
+     * @param $limit: số lượng bản ghi
+     */
+    public function limit($limit = 10)
+    {
+        $this->sqlBuilder .= " LIMIT $limit ";
+        return $this;
+    }
+    /**
+     * @method where: điều kiện
+     * @param $column: tên cột
+     * @param $operator: toán tử điều kiện
+     * @param $value: giá trị
+     */
+    public function where($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " WHERE `{$column}` $operator :{$column}";
+        //Thêm dữ liệu vào thuộc params
+        $this->params["$column"] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @method andWhere: thêm điều kiện AND
+     * @param $column: tên cột
+     * @param $operator: toán tử điều kiện
+     * @param $value: giá trị
+     */
+    public function andWhere($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " AND `{$column}` $operator :{$column}";
+        //Thêm dữ liệu vào thuộc params
+        $this->params["$column"] = $value;
+        return $this;
+    }
+
+    /**
+     * @method orWhere: thêm điều kiện OR
+     * @param $column: tên cột
+     * @param $operator: toán tử điều kiện
+     * @param $value: giá trị
+     */
+    public function orWhere($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " OR `{$column}` $operator :{$column}";
+        //Thêm dữ liệu vào thuộc params
+        $this->params["$column"] = $value;
+        return $this;
+    }
+
+    /**
+     * @method create: thêm 1 bản ghi mới
+     * @param $data: là 1 mảng dữ liệu bao gồm có key: tên cột và value
+     */
+    public static function create($data)
+    {
+        $model = new static;
+        $sql = "INSERT INTO $model->table(";
+
+        $columnNames = ""; //Danh sách các cột
+        $params = ""; //Danh sách các tham số
+        foreach ($data as $key => $value) {
+            $columnNames .= " `{$key}`, ";
+            $params .= " :{$key}, ";
+        }
+        //Xóa dấu , ở cuối các chuỗi
+        $columnNames = rtrim($columnNames, ", ");
+        $params = rtrim($params, ", ");
+
+        //Nối vào câu lệnh SQL
+        $sql .= $columnNames . ") VALUES (" . $params . ")";
+
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute($data);
+        return $model->conn->lastInsertId();
     }
 }
