@@ -25,3 +25,9 @@ function dd($data)
     var_dump($data);
     echo "</pre>";
 }
+
+//hàm route trả về đường dẫn cho route
+function route($route)
+{
+    return APP_URL . $route;
+}
