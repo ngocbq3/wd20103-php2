@@ -21,8 +21,9 @@ class HomeController
 
     public function showAll()
     {
-        $products = Category::select('products.*', 'categories.name')
+        $products = Category::select('products.*', 'categories.name as cate_name')
             ->join('products', 'category_id')
+            ->orderBy('products.id', 'DESC')
             ->get();
         dd($products);
     }

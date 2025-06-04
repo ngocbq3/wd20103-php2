@@ -20,11 +20,11 @@ class ProductController
     public function store()
     {
         $data = [
-            'name' => "Test 1",
+            'name' => "Test 2",
             'image' => "No image",
-            'price' => 120,
-            'stock' => 99,
-            'description' => "Mô tả 1",
+            'price' => 100,
+            'stock' => 110,
+            'description' => "Mô tả 2",
             'category_id'   => 3
         ];
 
@@ -44,5 +44,10 @@ class ProductController
         ];
 
         Product::update(108, $data);
+    }
+
+    public function destroy()
+    {
+        Product::delete(108);
     }
 }
