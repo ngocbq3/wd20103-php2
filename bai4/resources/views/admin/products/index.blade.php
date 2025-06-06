@@ -30,7 +30,12 @@
                         <td>{{ $pro->price }}</td>
                         <td>{{ $pro->cate_name }}</td>
                         <td>
-                            Edit / Delete
+                            Edit /
+
+                            <form action="{{ route("admin/products/{$pro->id}") }}" method="post">
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Bạn có muốn xóa không?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

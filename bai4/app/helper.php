@@ -31,3 +31,9 @@ function route($route)
 {
     return APP_URL . $route;
 }
+
+//Hàm redirect điều hướng website
+function redirect($path)
+{
+    header("location: " . route($path));
+}
