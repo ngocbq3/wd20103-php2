@@ -9,6 +9,10 @@ $router->mount('/admin', function () use ($router) {
         $router->get('/',         ProductController::class . "@index");
         $router->get('/create',  ProductController::class . "@create");
         $router->post('/create',  ProductController::class . "@store");
-        $router->post('/{id}',  ProductController::class . "@destroy");
+        $router->post('/delete/{id}',  ProductController::class . "@destroy");
+
+        //From edit
+        $router->get('/edit/{id}', ProductController::class . "@edit");
+        $router->post('/edit/{id}', ProductController::class . "@update");
     });
 });

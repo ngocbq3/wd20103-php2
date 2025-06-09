@@ -48,4 +48,11 @@ class ProductController
         Product::delete($id);
         return redirect('admin/products');
     }
+
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        $categories = Category::all();
+        return view("admin.products.edit", compact("product", "categories"));
+    }
 }
