@@ -37,3 +37,14 @@ function redirect($path)
 {
     header("location: " . route($path));
 }
+
+//Hàm session_flash. lấy session dùng 1 lần
+function session_flash($message)
+{
+    if (!isset($_SESSION[$message])) {
+        return "";
+    }
+    $message = $_SESSION[$message];
+    unset($_SESSION[$message]);
+    return $message;
+}
