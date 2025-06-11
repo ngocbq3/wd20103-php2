@@ -39,12 +39,25 @@ function redirect($path)
 }
 
 //Hàm session_flash. lấy session dùng 1 lần
-function session_flash($message)
+function session_flash($key, $value = null)
 {
-    if (!isset($_SESSION[$message])) {
-        return "";
+    //Nếu có value, thì sẽ tiến hành set dữ liệu cho session
+    if ($value !== null) {
+        $_SESSION['_flash'][$key] = $value;
+    } else {
+        //Nếu chỉ có key, thì lấy value ra
+        if (isset($_SESSION['_flash_old'][$key])) {
+            $value = $_SESSION['_flash_old'][$key];
+            unset($_SESSION['_flash_old'][$key]);
+            return $value;
+        }
     }
-    $message = $_SESSION[$message];
-    unset($_SESSION[$message]);
-    return $message;
+    return null;
+}
+
+//Gọi ở đầu mỗi request, thông thường sẽ ở index
+function flash_next_request()
+{
+    $_SESSION['_flash_old'] = $_SESSION['_flash'] ?? [];
+    unset($_SESSION['_flash']);
 }

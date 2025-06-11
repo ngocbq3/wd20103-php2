@@ -34,15 +34,27 @@ class ProductController
         if ($product['price'] == "" || $product['price'] < 0) {
             $errors['price'] = "Bạn cần nhập giá là số nguyên dương";
         }
+
         //Xử lý file ảnh
         $file = $_FILES['image'];
         if ($file['size'] > 0) {
             //Lấy đường dẫn hình ảnh
             $image = "images/" . $file['name'];
-            //upload file
-            move_uploaded_file($file['tmp_name'], $image);
-            //đưa image vào mảng product
-            $product['image'] = $image;
+
+            //Validate image
+            //mảng định dạng ảnh được phép upload
+            $imgs = ['jpg', 'jpeg', 'png', 'gif'];
+            //Lấy ra định dạng của file
+            $file_ext = pathinfo($image, PATHINFO_EXTENSION);
+            //Kiểm tra định dạng của file
+            if (in_array($file_ext, $imgs)) {
+                //upload file
+                move_uploaded_file($file['tmp_name'], $image);
+                //đưa image vào mảng product
+                $product['image'] = $image;
+            } else {
+                $errors['image'] = "Định dạng không được phép";
+            }
         }
 
         //Nếu có lỗi validate
@@ -68,10 +80,10 @@ class ProductController
         $categories = Category::all();
 
         //Lấy thông báo
-        $message = $_SESSION['message'] ?? '';
-        //Xóa session
-        unset($_SESSION['message']);
-        return view("admin.products.edit", compact("product", "categories", "message"));
+        // $message = $_SESSION['message'] ?? '';
+        // //Xóa session
+        // unset($_SESSION['message']);
+        return view("admin.products.edit", compact("product", "categories"));
     }
 
     public function update($id)
@@ -91,8 +103,8 @@ class ProductController
             $product_old = Product::find($id);
         }
 
-        $_SESSION['message'] = "Cập nhật dữ liệu thành công";
-
+        // $_SESSION['message'] = "Cập nhật dữ liệu thành công";
+        session_flash('message', 'Cập nhật dữ liệu thành công');
         Product::update($id, $product);
         if ($file['size'] > 0) {
             if (file_exists($product_old->image)) {

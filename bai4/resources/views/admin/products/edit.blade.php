@@ -4,11 +4,12 @@
 @endsection
 
 @section('content')
-    @if ($message != "")
+    @if (($msg = session_flash('message')) && $msg != null)
         <div class="alert alert-success">
-            {{ $message }}
+            {{ $msg }}
         </div>
     @endif
+
     <div class="container w-80">
         <form action="{{ route('admin/products/edit/' . $product->id) }}" method="post" enctype="multipart/form-data">
             <div class="mb-3">
