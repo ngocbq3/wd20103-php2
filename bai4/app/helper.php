@@ -36,6 +36,7 @@ function route($route)
 function redirect($path)
 {
     header("location: " . route($path));
+    die;
 }
 
 //Hàm session_flash. lấy session dùng 1 lần

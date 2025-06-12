@@ -16,3 +16,14 @@ $router->mount('/admin', function () use ($router) {
         $router->post('/edit/{id}', ProductController::class . "@update");
     });
 });
+
+
+$router->before('GET|POST', '/admin.*', function () {
+    if (!isset($_SESSION['user'])) {
+        redirect('auth/login');
+    } else {
+        if ($_SESSION['user']->role != 'admin') {
+            redirect('');
+        }
+    }
+});

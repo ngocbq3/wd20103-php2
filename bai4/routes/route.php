@@ -14,7 +14,9 @@ require_once "web.php";
 require_once "admin.php";
 
 $router->set404(function () {
-    return view('404');
+    header('HTTP/1.1 404 Not Found');
+    echo "404 NOT FOUND";
 });
+
 // Run it!
 $router->run();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\ProductController;
 
@@ -27,3 +28,13 @@ $router->get('/products', ProductController::class . "@index");
 $router->get('/products/store', ProductController::class . "@store");
 $router->get('/products/update', ProductController::class . "@update");
 $router->get('/products/delete', ProductController::class . "@destroy");
+
+
+$router->mount('/auth', function () use ($router) {
+    $router->get('/login', AuthController::class . "@login");
+    $router->post('/login', AuthController::class . "@postLogin");
+    $router->get('/register', AuthController::class . "@register");
+    $router->post('/register', AuthController::class . "@postRegister");
+
+    $router->get('/logout', AuthController::class . "@logout");
+});
